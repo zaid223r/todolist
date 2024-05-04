@@ -1,0 +1,37 @@
+{% extends "main/index.html" %} 
+
+{% block title %}{% endblock title %} 
+
+{% block content %}
+
+    <div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl" style="margin-top : 200px;">
+        <div class="tasks space-y-3" id="tasks">
+            {% for task in completed %}
+                {% if user.get_username == task.user.username %}
+                    <div class="p-4 bg-gray-200 rounded-xl">
+                        <p>{{ task.details }} is {{ task.status }}
+                            <form action="{% url 'delete' task.id %}" method="POST" >
+                                <button class="px-5 py-3 rounded-xl text-white bg-red-900 hover:bg-red-500" style="display:inline;" id="task-start">DELETE</button>
+                            </form>
+                        </p>
+                    </div>
+
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        function scrollToBottom() 
+        {
+            const objDiv = document.querySelector('#tasks')
+            objDiv.scrollTop = objDiv.scrollHeight
+        }
+
+        scrollToBottom();
+    </script>
+{% endblock scripts %}
+
